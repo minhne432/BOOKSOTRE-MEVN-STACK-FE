@@ -14,6 +14,7 @@ const routes = [
     // Đặt tên cho route, dễ dàng sử dụng trong code khác.
     name: 'Home'
   },
+
   {
     path: '/orders/orderDetails',
     component: () => import('@/views/OrderSuccess.vue'),
@@ -73,6 +74,11 @@ const routes = [
     path: '/user/',
     name: 'user.home',
     component: () => import('@/views/UserProfile.vue')
+  },
+  {
+    path: '/admin/dashboard',
+    name: 'dashboard',
+    component: () => import('@/views/Dashboard.vue')
   },
   {
     // Địa chỉ URL không khớp với bất kỳ route nào ở trên.

@@ -74,8 +74,14 @@ function makeBooksService() {
     return await fetch(`${baseUrl}/${id}`).then((res) => res.json())
   }
 
-  async function getBooks(page, limit = 8) {
-    let url = `${baseUrl}?page=${page}&limit=${limit}`
+  async function getBooks(page, category_id, limit = 8) {
+    let url = ''
+    if (category_id != 0 && category_id != undefined) {
+      url = `${baseUrl}?page=${page}&limit=${limit}&category_id=${category_id}`
+    } else {
+      url = `${baseUrl}?page=${page}&limit=${limit}`
+    }
+
     return await fetch(url).then((res) => {
       const data = res.json()
       // console.log(data)

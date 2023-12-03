@@ -10,6 +10,12 @@
         <!-- main menus / order -->
         <div class="main-menus">
           <!-- List of books -->
+          <select v-model="currentCategory" @change="updateCurrentCat(currentCategory)">
+            <option value="0" selected>Chọn danh mục</option>
+            <option v-for="category in categories" :key="category.id" :value="category.id">
+              {{ category.name }}
+            </option>
+          </select>
           <div class="main-product">
             <h2 class="main-title">Chọn sách</h2>
 
@@ -104,9 +110,9 @@ const goToDetailsBook = (book) => {
   })
 }
 
-async function retrieveBooks(page) {
+async function retrieveBooks(page, category_id) {
   try {
-    const chunk = await booksService.getBooks(page) // Gọi API để lấy danh sách sách
+    const chunk = await booksService.getBooks(page, category_id) // Gọi API để lấy danh sách sách
     //console.log(chunk)
     totalPages.value = chunk.metadata.lastPage ?? 1 // Cập nhật tổng số trang
     //console.log(chunk.metadata.lastPage)
@@ -117,8 +123,32 @@ async function retrieveBooks(page) {
   }
 }
 
+const categories = ref([])
+const currentCategory = ref(0)
+async function updateCurrentCat(category_id) {
+  console.log(category_id)
+  await retrieveBooks(1, category_id)
+}
+
+// Hàm gọi API để lấy danh sách các danh mục
+async function fetchCategories() {
+  try {
+    const response = await fetch('http://localhost:3000/api/products/categories/getall')
+    if (!response.ok) {
+      throw new Error('Không thể lấy dữ liệu từ server')
+    }
+    const data = await response.json()
+    categories.value = data // Lưu danh sách danh mục vào biến categories
+  } catch (error) {
+    console.error('Lỗi khi lấy danh sách danh mục:', error)
+  }
+}
+
 // When this component is mounted, load the first page of contacts
-onMounted(() => retrieveBooks(1))
+onMounted(async () => {
+  await retrieveBooks(1)
+  await fetchCategories()
+})
 
 // When currentPage changes, fetch contacts for currentPage
 watchEffect(() => retrieveBooks(currentPage.value))

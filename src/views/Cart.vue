@@ -21,75 +21,74 @@
         </li>
       </ul>
     </div>
-  </div>
+    <!-- Modal hiển thị thông tin mua hàng -->
+    <div v-if="showPurchaseModal" class="purchase-modal home">
+      <div class="modal-content">
+        <!-- Form thông tin mua hàng -->
+        <div class="form-section">
+          <form @submit.prevent="confirmPurchase">
+            <h2>Nhập thông tin mua hàng</h2>
+            <label for="name">Tên:</label>
+            <input type="text" id="name" v-model="fullname" required />
 
-  <!-- Modal hiển thị thông tin mua hàng -->
-  <div v-if="showPurchaseModal" class="purchase-modal">
-    <div class="modal-content">
-      <!-- Form thông tin mua hàng -->
-      <div class="form-section">
-        <form @submit.prevent="confirmPurchase">
-          <h2>Nhập thông tin mua hàng</h2>
-          <label for="name">Tên:</label>
-          <input type="text" id="name" v-model="fullname" required />
+            <label for="phone">Số điện thoại:</label>
+            <input type="text" id="phone" v-model="phone_number" required />
 
-          <label for="phone">Số điện thoại:</label>
-          <input type="text" id="phone" v-model="phone_number" required />
+            <label for="address">Địa chỉ:</label>
+            <input type="text" id="address" v-model="address" required />
+            <div class="payment-method">
+              <p>Phương thức thanh toán</p>
 
-          <label for="address">Địa chỉ:</label>
-          <input type="text" id="address" v-model="address" required />
-          <div class="payment-method">
-            <p>Phương thức thanh toán</p>
+              <label>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  v-model="selectedPaymentMethod"
+                  value="cash"
+                />
+                Cash On Delivery
+              </label>
 
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                v-model="selectedPaymentMethod"
-                value="cash"
-              />
-              Cash On Delivery
-            </label>
+              <label>
+                <input
+                  type="radio"
+                  name="paymentMethod"
+                  v-model="selectedPaymentMethod"
+                  value="bankTransfer"
+                />
+                Bank Transfer
+              </label>
+            </div>
+            <!-- Nút xác nhận mua hàng -->
+            <button type="submit">Xác nhận mua hàng</button>
+            <button @click="closePurchaseModal" class="red-button-1">Đóng</button>
+          </form>
+        </div>
 
-            <label>
-              <input
-                type="radio"
-                name="paymentMethod"
-                v-model="selectedPaymentMethod"
-                value="bankTransfer"
-              />
-              Bank Transfer
-            </label>
-          </div>
-          <!-- Nút xác nhận mua hàng -->
-          <button type="submit">Xác nhận mua hàng</button>
-          <button @click="closePurchaseModal" class="red-button-1">Đóng</button>
-        </form>
-      </div>
-
-      <div class="product-details-section">
-        <h3>Chi tiết sản phẩm</h3>
-        <table>
-          <thead>
-            <tr>
-              <th>Tên sản phẩm</th>
-              <th>Giá</th>
-              <th>Số lượng</th>
-              <th>Thành tiền</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="(product, index) in cartItems" :key="index">
-              <td>{{ product.name }}</td>
-              <td>{{ product.price }}</td>
-              <td>{{ product.quantity }}</td>
-              <td>{{ product.price * product.quantity }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <p>
-          <strong>Tổng số tiền cần thanh toán: {{ calculateTotal() }}</strong>
-        </p>
+        <div class="product-details-section">
+          <h3>Chi tiết sản phẩm</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Tên sản phẩm</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr v-for="(product, index) in cartItems" :key="index">
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.price * product.quantity }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <p>
+            <strong>Tổng số tiền cần thanh toán: {{ calculateTotal() }}</strong>
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -432,7 +431,7 @@ button[type='button']:hover {
 }
 .modal-content {
   /* Các thuộc tính CSS khác */
-  width: 80%; /* Đặt kích thước cần thiết, ví dụ 80% chiều rộng */
+  width: 50%; /* Đặt kích thước cần thiết, ví dụ 80% chiều rộng */
   /* ... */
 }
 

@@ -64,7 +64,9 @@ const toggleEdit = async () => {
     localStorage.setItem('fullname', editedFullName.value)
     localStorage.setItem('phone_number', editedPhoneNumber.value)
     localStorage.setItem('address', editedAddress.value)
-
+    fullName.value = editedFullName.value
+    phone_number.value = editedPhoneNumber.value
+    address.value = editedAddress.value
     // Tắt chế độ chỉnh sửa
     editing.value = false
 
@@ -91,8 +93,9 @@ const toggleEdit = async () => {
         throw new Error('Network response was not ok')
       }
       const data = await response.json()
-      console.log('Updated successfully:', data)
-      localStorage.setItem('avatar', data.avatar)
+      console.log('Updated successfully:', data.updatedUser.avatar)
+      userAvatar.value = data.updatedUser.avatar
+      localStorage.setItem('avatar', data.updatedUser.avatar)
     } catch (error) {
       console.error('Error updating user:', error)
     }

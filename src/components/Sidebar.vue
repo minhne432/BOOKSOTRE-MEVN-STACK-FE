@@ -7,7 +7,7 @@
         </span>
 
         <div class="text header-text">
-          <span class="name">PerfumeShop</span>
+          <span class="name">BookShop</span>
         </div>
       </div>
 
@@ -32,10 +32,15 @@
             <!-- </a> -->
           </li>
           <!-- cart -->
+
           <li class="nav-links">
-            <router-link :to="{ name: 'cart' }">
+            <router-link v-if="shouldShowLink" :to="{ name: 'cart' }">
               <i class="bx bx-cart icon"></i>
               <span class="text nav-text">Cart</span>
+            </router-link>
+            <router-link v-if="!shouldShowLink" :to="{ name: 'dashboard' }">
+              <i class="bx bxs-report icon"></i>
+              <span class="text nav-text">Report</span>
             </router-link>
           </li>
           <!-- Profile -->

@@ -1,54 +1,56 @@
 <template>
   <SideBar />
-  <div class="order-history">
-    <h1>Lịch sử đơn hàng</h1>
-    <table class="order-table">
-      <thead>
-        <tr>
-          <th>ID đơn hàng</th>
-          <th>Ngày đặt hàng</th>
-          <th>Trạng thái</th>
-          <th>Người nhận</th>
-          <th>Số điện thoại</th>
-          <th>Chi tiết sản phẩm</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="order in orders" :key="order.id">
-          <td>{{ order.id }}</td>
-          <td>{{ formatOrderDate(order.order_date) }}</td>
-          <td>{{ order.status }}</td>
-          <td>{{ order.fullname }}</td>
-          <td>{{ order.phone_number }}</td>
-          <td>
-            <button @click="showOrderDetails(order.id)">Xem chi tiết sản phẩm</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Modal hiển thị thông tin chi tiết đơn hàng -->
-
-    <div v-if="showDetailsModal" class="order-details-modal">
-      <table>
+  <div class="home">
+    <div class="order-history">
+      <h1>Lịch sử đơn hàng</h1>
+      <table class="order-table">
         <thead>
           <tr>
-            <th>Tên sản phẩm</th>
-            <th>Giá</th>
-            <th>Số lượng</th>
-            <!-- Các cột thông tin khác về sản phẩm -->
+            <th>ID đơn hàng</th>
+            <th>Ngày đặt hàng</th>
+            <th>Trạng thái</th>
+            <th>Người nhận</th>
+            <th>Số điện thoại</th>
+            <th>Chi tiết sản phẩm</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(product, index) in orderDetails" :key="index">
-            <td>{{ product.name }}</td>
-            <td>{{ product.price }}</td>
-            <td>{{ product.number_of_products }}</td>
-            <!-- Các ô thông tin khác về sản phẩm -->
+          <tr v-for="order in orders" :key="order.id">
+            <td>{{ order.id }}</td>
+            <td>{{ formatOrderDate(order.order_date) }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.fullname }}</td>
+            <td>{{ order.phone_number }}</td>
+            <td>
+              <button @click="showOrderDetails(order.id)">Xem chi tiết sản phẩm</button>
+            </td>
           </tr>
         </tbody>
       </table>
-      <button @click="closeDetailsModal">Trở lại</button>
+
+      <!-- Modal hiển thị thông tin chi tiết đơn hàng -->
+
+      <div v-if="showDetailsModal" class="order-details-modal">
+        <table>
+          <thead>
+            <tr>
+              <th>Tên sản phẩm</th>
+              <th>Giá</th>
+              <th>Số lượng</th>
+              <!-- Các cột thông tin khác về sản phẩm -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(product, index) in orderDetails" :key="index">
+              <td>{{ product.name }}</td>
+              <td>{{ product.price }}</td>
+              <td>{{ product.number_of_products }}</td>
+              <!-- Các ô thông tin khác về sản phẩm -->
+            </tr>
+          </tbody>
+        </table>
+        <button @click="closeDetailsModal">Trở lại</button>
+      </div>
     </div>
   </div>
 </template>
@@ -100,7 +102,7 @@ const showOrderDetails = async (orderId) => {
 }
 </script>
 
-<style>
+<style scoped>
 /* CSS để căn giữa và tùy chỉnh giao diện bảng */
 .order-history {
   text-align: center;
